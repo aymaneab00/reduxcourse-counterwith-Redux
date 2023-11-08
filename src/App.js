@@ -1,25 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import { connect, useSelector } from "react-redux";
+import "./App.css";
 
-function App() {
+function App({increment, decrement, reset }) {
+  const numm=useSelector(data=>data.num)
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <p>{numm}</p>
+      <button onClick={increment}> Incrementer</button>
+      <button onClick={decrement}>Decrementer</button>
+      <button onClick={reset}>Reset</button>
     </div>
   );
 }
 
-export default App;
+const mapStatetoprops = (state) => {
+  return { num: state };
+}; //useselect on class 
+const mapDispatchtoprops = (dispatch) => {
+  return {
+    increment: () => dispatch({ type: "incrementation" }),
+    decrement: () => dispatch({ type: "Decrementer" }),
+    reset: () => dispatch({ type: "reset" }),
+  };
+};
+export default connect(mapStatetoprops, mapDispatchtoprops)(App);
